@@ -6,7 +6,7 @@
 
 
 
-### Windows平台
+## Windows平台
 
 如果你是Linux用家，並且已經有Windows VM，而又不想煩Command-Line的話，建議直接使用VM。因為目前為止QMK Toolbox只支援Windows和MacOS。Linux和Android有聽說過可以用Command-Line去Flash，不過這個就有待研究。
 
@@ -39,7 +39,6 @@
 同時要在VirtualBox的右下角，USB小圖意中勾選`STMicroelectronices STM32 BOOTLOADER`：
 
 <center><img src="./images/vbox2.png"> </center>
-
 這樣VM Host (Windows) 的QMK Toolbox才能辨認得到DZ60。
 
 
@@ -66,6 +65,51 @@
 
 
 
+## Linux平台
+
+我自已是在ArchLinux上測試，不過其他發行版應該都OKAY，官方文件都有支授Ubuntu/Debian。要在Linux上更新DZ60 QMK Firmware其實對於熟手的朋友來講也不難。
+
+
+
+### 1） Clone QMK-Fireware Repo
+
+這個很重要，一定要用Git Clone而不是直接下載，因為Repo裡頭有其他Git-Submodule，沒安裝的話最後make的時侯會失敗（之前失敗就是因為這部分）。裡面會有段Script去幫助你下載所有需要的Packages。
+
+```shell
+git clone --recurse-submodules https://github.com/qmk/qmk_firmware.git
+cd qmk_firmware
+
+ # install all require packages
+util/qmk_install.sh
+```
+
+
+
+### 2）Compile Keyboard Layout
+
+不多說，修改過後Compile出Binary。
+
+```shell
+CFLAGS="-Wno-error=deprecated" make dztech/dz60rgb:dfu
+```
+
+
+
+### 3) Flash it !
+
+不知道為何，我在使用 ': dfu' 時系統沒有自已把Program Flash進DZ60，所以只好自己再來一次。別忘了按Esc鍵讓DZ60進入Bootloader模式。
+
+```shell
+dfu-util -a 0 -d 0483:df11 -s 0x08000000:leave -D "./dztech_dz60rgb_default.bin"
+```
+
+完成。   
+
+
+
+
+
 Reference:   
 https://shimo.im/docs/fJAinRsw41wb4eGI/read   
-https://config.qmk.fm/#/dztech/dz60rgb/LAYOUT
+https://config.qmk.fm/#/dztech/dz60rgb/LAYOUT   
+https://docs.qmk.fm/#/newbs_flashing
