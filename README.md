@@ -61,6 +61,12 @@
 
 如果一切正常，QMK Toolbox會探測到你的DZ60然後在Console出現”STM32 device connected: ...."之類的字句。選擇Local file為剛才下載好的韌體Binary（*.bin格式），然後按“Flash"。完成。
 
+   
+
+​    
+
+​    
+
 
 
 
@@ -90,14 +96,14 @@ util/qmk_install.sh
 不多說，修改過後Compile出Binary。
 
 ```shell
-CFLAGS="-Wno-error=deprecated" make dztech/dz60rgb:dfu
+CFLAGS="-Wno-error=deprecated" make dztech/dz60rgb:default
 ```
 
 
 
 ### 3) Flash it !
 
-不知道為何，我在使用 ': dfu' 時系統沒有自已把Program Flash進DZ60，所以只好自己再來一次。別忘了按Esc鍵讓DZ60進入Bootloader模式。
+不知道為何，我在使用 ': dfu-util' 時系統沒有自已把Program Flash進DZ60，所以只好自己再來一次。別忘了按Esc鍵讓DZ60進入Bootloader模式。
 
 ```shell
 dfu-util -a 0 -d 0483:df11 -s 0x08000000:leave -D "./dztech_dz60rgb_default.bin"
