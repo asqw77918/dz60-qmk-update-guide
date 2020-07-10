@@ -96,8 +96,10 @@ util/qmk_install.sh
 不多說，修改過後Compile出Binary。
 
 ```shell
-CFLAGS="-Wno-error=deprecated" make dztech/dz60rgb:default
+CFLAGS="-Wno-error=deprecated" make dztech/dz60rgb/v1/default
 ```
+edit: 10 July 2020 (dz60rgb出了v2版, 所以source code分開了v1, v2版本)    
+edit: 10 July 2020 (最新pull request [master] dz60rgb v1 解決了在bios階段reboot時dz60 program freeze問題 https://github.com/qmk/qmk_firmware/issues/5585)    
 
 
 
